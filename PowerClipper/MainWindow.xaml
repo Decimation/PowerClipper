@@ -4,9 +4,66 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PowerClipper"
+        x:Name="Wnd_Main"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Loaded="MainWindow_OnLoaded"
+        Closing="MainWindow_OnClosing"
+        Title="MainWindow" Height="600" Width="1000">
+    <Window.Resources>
+        <Style x:Key="BoldGridViewCellStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
     <Grid>
+        <ListView x:Name="Lv_Entries" Margin="0,149,0,0"
+                  ItemsSource="{Binding ElementName=Wnd_Main, Path=ClipboardEntries}"
+                  IsSynchronizedWithCurrentItem="True" d:DataContext="{Binding Current}"
+                  SelectedItem="{Binding Current, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="120" x:Name="Lvgvc_Name">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name, Mode=OneWay}"
+                                           Style="{StaticResource BoldGridViewCellStyle}" />
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Entry" Width="110">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+
+                                <TextBlock Text="{Binding Format, Mode=OneWay}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Data" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+
+                                <TextBlock Text="{Binding Data, Mode=OneWay}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Preview" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+
+                                <Image Source="{Binding Preview, Mode=OneWay}" Stretch="UniformToFill" Width="150" Height="150"> </Image>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label x:Name="Lb_Id" Content="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+               HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top" />
 
     </Grid>
 </Window>
