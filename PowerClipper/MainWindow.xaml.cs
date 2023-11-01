@@ -55,26 +55,27 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
 	public ObservableCollection<ClipboardEntry> ClipboardEntries { get; private set; }
 
-	private string m_id;
+	private int m_sequence;
 
-	public string Id
+	public int Sequence
 	{
-		get => m_id;
+		get => m_sequence;
 		set
 		{
-			if (value == m_id) return;
-			m_id = value;
+			if (value == m_sequence) return;
+			m_sequence = value;
 			OnPropertyChanged();
 		}
 	}
 
-	private int m_prevId;
+	private int m_prevSeq;
 
 	private void ClipboardTick(object? sender, EventArgs e)
 	{
 		var csq = Clipboard2.SequenceNumber;
-		if (m_prevId != csq) {
-			Id = $"{csq}";
+
+		if (m_prevSeq != csq) {
+			Sequence = csq;
 			var n = ClipboardEntry.Get();
 
 			foreach (var ce in n) {
@@ -83,15 +84,21 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 				}
 			}
 
-			m_prevId = csq;
+			m_prevSeq = csq;
 		}
 	}
 
 	private readonly DispatcherTimer m_cbDispatcher;
 
-	private void MainWindow_OnLoaded(object sender, RoutedEventArgs e) { }
+	private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+	{
+		e.Handled = true;
+	}
 
-	private void MainWindow_OnClosing(object? sender, CancelEventArgs e) { }
+	private void MainWindow_OnClosing(object? sender, CancelEventArgs e)
+	{
+		
+	}
 
 	public event PropertyChangedEventHandler? PropertyChanged;
 

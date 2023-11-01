@@ -28,7 +28,12 @@ public class ClipboardEntry : IDisposable
 
 	public BitmapSource Preview { get; private set; }
 
-	public ClipboardEntry() { }
+	public int Sequence { get;  }
+
+	private ClipboardEntry()
+	{
+		Sequence = Clipboard2.SequenceNumber;
+	}
 
 	public static IEnumerable<ClipboardEntry> Get()
 	{

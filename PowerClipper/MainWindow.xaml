@@ -15,8 +15,9 @@
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
+        <SolidColorBrush x:Key="Br_Black1" Color="#FF1B1B1B" />
     </Window.Resources>
-    <Grid>
+    <Grid x:Name="Gr_Main" Background="{DynamicResource Br_Black1}">
         <ListView x:Name="Lv_Entries" Margin="0,149,0,0"
                   ItemsSource="{Binding ElementName=Wnd_Main, Path=ClipboardEntries}"
                   IsSynchronizedWithCurrentItem="True" d:DataContext="{Binding Current}"
@@ -54,7 +55,9 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
 
-                                <Image Source="{Binding Preview, Mode=OneWay}" Stretch="UniformToFill" Width="150" Height="150"> </Image>
+                                <Image Source="{Binding Preview, Mode=OneWay}" Stretch="UniformToFill" Width="150"
+                                       Height="150">
+                                </Image>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -62,8 +65,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label x:Name="Lb_Id" Content="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-               HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top" />
+
+        <TextBox x:Name="Tb_Sequence" HorizontalAlignment="Left" Margin="10,126,0,0" TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="50" IsReadOnly="True" Text="{Binding Sequence, UpdateSourceTrigger=PropertyChanged}" />
 
     </Grid>
 </Window>
